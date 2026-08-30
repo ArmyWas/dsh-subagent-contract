@@ -1,0 +1,13 @@
+{
+  "name": "dsh-subagent-contract-sdk-runner-experiment",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check lifecycle.mjs && node --check runner-environment.mjs && node --check runner-policy.mjs && node --check run-matrix.mjs && node --check smoke-initialize.mjs && node --test test-lifecycle.mjs test-runner-environment.mjs test-runner-policy.mjs",
+    "smoke": "node smoke-initialize.mjs"
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-sdk-client": "0.1.2-alpha.2",
+    "@deepseek-ai/dsh-subprocess": "0.1.2-alpha.2"
+  }
+}

@@ -1,0 +1,6 @@
+{"type":"session","version":0,"id":"p-report","createdAt":300,"cwd":"/fixture","delegationDepth":0}
+{"type":"tool/call","seq":1,"time":301,"data":{"turn":1,"step":1,"callId":"call-report-child","name":"subagent","arguments":"{\"description\":\"contract:continuable-report\",\"prompt\":\"Report CONTRACT-REPORT-OK then reply DONE\",\"run_in_background\":true}"}}
+{"type":"tool/result","seq":2,"time":302,"data":{"turn":1,"step":1,"message":{"source":{"kind":"tool","callId":"call-report-child"},"content":[{"type":"tool-result","toolCallId":"call-report-child","content":[{"type":"text","text":"started subagent c-report"}],"isError":false}],"role":"user","id":"result-report-child"}}}
+{"type":"user/message","seq":3,"time":308,"data":{"source":{"kind":"subagent-report","form":"relay","senderSessionId":"c-report"},"content":[{"type":"text","text":"Background subagent c-report reported:"},{"type":"text","text":"CONTRACT-REPORT-OK"}],"role":"user","id":"11111111-1111-4111-8111-111111111111"}}
+{"type":"user/message","seq":4,"time":311,"data":{"source":{"kind":"subagent-settled","form":"notice","summary":"Background subagent c-report finished.","senderSessionId":"c-report"},"content":[{"type":"text","text":"Background subagent c-report finished."}],"role":"user","id":"settled-report-1"}}
+{"type":"turn/end","seq":5,"time":312,"data":{"reason":{"kind":"completed"}}}

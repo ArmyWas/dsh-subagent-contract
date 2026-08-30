@@ -1,0 +1,49 @@
+{
+  "benchmark": "dsh-subagent-contract-v0.1",
+  "model": "fixture-model",
+  "createdAt": 0,
+  "trials": 1,
+  "seed": 0,
+  "pricing": null,
+  "tempRoot": ".",
+  "cases": [
+    {
+      "caseId": "foreground-success",
+      "trial": 1,
+      "status": "completed",
+      "tracePath": "foreground-parent/session.jsonl",
+      "tracePaths": ["foreground-parent/session.jsonl", "foreground-child/session.jsonl"],
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "caseId": "two-admissions",
+      "trial": 1,
+      "status": "completed",
+      "tracePath": "admission-parent/session.jsonl",
+      "tracePaths": ["admission-parent/session.jsonl", "admission-child-a/session.jsonl", "admission-child-b/session.jsonl"],
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "caseId": "continuable-fifo",
+      "trial": 1,
+      "status": "completed",
+      "tracePath": "continuable-parent/session.jsonl",
+      "tracePaths": ["continuable-parent/session.jsonl", "continuable-child/session.jsonl"],
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "caseId": "continuable-report",
+      "trial": 1,
+      "status": "completed",
+      "tracePath": "report-parent/session.jsonl",
+      "tracePaths": ["report-parent/session.jsonl", "report-child/session.jsonl"],
+      "exitCode": 0,
+      "timedOut": false
+    }
+  ],
+  "aggregate": null,
+  "grading": null
+}

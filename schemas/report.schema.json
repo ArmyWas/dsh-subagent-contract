@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArmyWas/dsh-subagent-contract/raw/main/schemas/report.schema.json",
+  "title": "dsh-subagent-contract verification report",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "tool",
+    "contract",
+    "source",
+    "summary",
+    "coverage",
+    "violations",
+    "compatibility",
+    "exitCode"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "tool": { "const": "dsh-subagent-contract" },
+    "contract": { "const": "dsh-subagent/v0.1" },
+    "source": {
+      "type": "object",
+      "required": ["kind", "benchmark", "artifact"],
+      "properties": {
+        "kind": { "enum": ["dsh-eval-compatible", "sdk-runner-claim"] },
+        "benchmark": { "type": "string" },
+        "artifact": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["trials", "verified", "skipped", "passed", "failed", "inconclusive", "violations", "compatibilityErrors"],
+      "properties": {
+        "trials": { "type": "integer", "minimum": 0 },
+        "verified": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "inconclusive": { "type": "integer", "minimum": 0 },
+        "violations": { "type": "integer", "minimum": 0 },
+        "compatibilityErrors": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["caseId", "trial", "sessions", "roots", "children", "subagentCalls", "foregroundCalls", "backgroundCalls", "sendMessageCalls", "reportCalls", "settlementNotices", "reportRelays", "scenarioStatus"],
+        "properties": {
+          "caseId": { "type": "string" },
+          "trial": { "type": "integer" },
+          "sessions": { "type": "integer", "minimum": 0 },
+          "roots": { "type": "integer", "minimum": 0 },
+          "children": { "type": "integer", "minimum": 0 },
+          "subagentCalls": { "type": "integer", "minimum": 0 },
+          "foregroundCalls": { "type": "integer", "minimum": 0 },
+          "backgroundCalls": { "type": "integer", "minimum": 0 },
+          "sendMessageCalls": { "type": "integer", "minimum": 0 },
+          "reportCalls": { "type": "integer", "minimum": 0 },
+          "settlementNotices": { "type": "integer", "minimum": 0 },
+          "reportRelays": { "type": "integer", "minimum": 0 },
+          "scenarioStatus": { "enum": ["exercised", "not-exercised", "not-applicable"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "violations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/diagnostic" }
+    },
+    "compatibility": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/diagnostic" }
+    },
+    "exitCode": { "enum": [0, 1, 2] }
+  },
+  "$defs": {
+    "diagnostic": {
+      "type": "object",
+      "required": ["severity", "contract", "code", "message"],
+      "properties": {
+        "severity": { "enum": ["violation", "compatibility"] },
+        "contract": { "type": "string" },
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "caseId": { "type": "string" },
+        "trial": { "type": "integer" },
+        "sessionId": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

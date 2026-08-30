@@ -1,0 +1,4 @@
+{"type":"session","version":0,"id":"p-foreground","createdAt":1,"cwd":"/fixture","delegationDepth":0}
+{"type":"tool/call","seq":1,"time":1,"data":{"turn":1,"step":1,"callId":"call-fg","name":"subagent","arguments":"{\"description\":\"contract:foreground-success\",\"prompt\":\"Return FG-OK\",\"run_in_background\":false}"}}
+{"type":"tool/result","seq":2,"time":2,"data":{"turn":1,"step":1,"message":{"source":{"kind":"tool","callId":"call-fg"},"content":[{"type":"tool-result","toolCallId":"call-fg","content":[{"type":"text","text":"FG-OK"}],"isError":false}],"role":"user","id":"result-fg"}}}
+{"type":"turn/end","seq":3,"time":3,"data":{"reason":{"kind":"completed"}}}

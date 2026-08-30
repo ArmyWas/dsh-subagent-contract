@@ -1,0 +1,89 @@
+{
+  "capturedAt": "2026-08-30T21:40:46.446Z",
+  "platform": "win32-x64",
+  "harness": "@deepseek-ai/dsh-sdk-client@0.1.2-alpha.2",
+  "model": "deepseek-v4-pro",
+  "runner": "persistent SDK profile experiment",
+  "attestation": {
+    "status": "self-attested local verification",
+    "artifactSha256": "fcbe3dc80f540cc82da83b2a4bc7b19873fb4c968299a8530372dbe6cb078618",
+    "executedRunnerSha256": "f254968ac009b9c3ae61a8b0e0319f6128bf1ca8b58990f89348c7a793163030",
+    "publishedExperimentRunnerSha256": "f254968ac009b9c3ae61a8b0e0319f6128bf1ca8b58990f89348c7a793163030",
+    "lifecycleSha256": "a4412565fb6f222a7506d97d037ad1ed652c429dfd721e13c08b2a2af974546a",
+    "runnerEnvironmentSha256": "c9d5270d4f89d8cdc0fb87f7ab0c47e8f63575891b1a93e92a25d30e73828312",
+    "runnerPolicySha256": "2815cd1adc23269794112d97c942e19480128d0e8ab160b235ce57c51c923cd3",
+    "publishedExperimentLockSha256": "0257f2970bad2a4b362a28a98d9550261ec4e0ccf56584cbcc2830e04252cce3",
+    "overlaySha256": "d36a22775f1f54da9dd65817338d5359a0d24af86ad234f6c4245d61e6f4d9f3",
+    "noReportOverlaySha256": "d480b4ef430d165e095ef309e6ebb39bddc6ea6dfdac0ee4be0d2383b58efd18",
+    "noControlOverlaySha256": "c61f51e19b3b79842df058263373b1b6e4b31860cbef8708d8e278fab441006a",
+    "traceSetSha256": "87e94845719f8bd4a81e998eb9e234e1c8fe104e0a2e365c8903b6b986b9ef7c",
+    "traceSetMethod": "SHA-256 of the newline-joined, lexicographically sorted SHA-256 content hashes of all 9 session logs",
+    "traceCount": 9,
+    "artifactCreatedAt": 1788126046446,
+    "earliestSessionCreatedAt": 1788125996913,
+    "derivedDurationSeconds": 49.533,
+    "node": "v24.14.1",
+    "os": "Windows_NT 10.0.26200"
+  },
+  "runtime": {
+    "serverInfo": {
+      "name": "deepseek-harness-sdk-runtime",
+      "version": "0.0.1"
+    },
+    "attempts": {
+      "foreground-success": 1,
+      "two-admissions": 1,
+      "continuable-fifo": 1,
+      "continuable-report": 1
+    },
+    "endpointMode": "public",
+    "endpointOrigin": "https://api.deepseek.com",
+    "maxOutputTokens": 4096
+  },
+  "verdict": {
+    "trials": 4,
+    "verified": 4,
+    "passed": 4,
+    "failed": 0,
+    "inconclusive": 0,
+    "violations": 0,
+    "compatibilityErrors": 0,
+    "exitCode": 0
+  },
+  "coverage": [
+    {
+      "caseId": "foreground-success",
+      "scenarioStatus": "exercised",
+      "sessions": 2,
+      "subagentCalls": 1,
+      "foregroundCalls": 1
+    },
+    {
+      "caseId": "two-admissions",
+      "scenarioStatus": "exercised",
+      "sessions": 3,
+      "subagentCalls": 2,
+      "foregroundCalls": 2
+    },
+    {
+      "caseId": "continuable-fifo",
+      "scenarioStatus": "exercised",
+      "sessions": 2,
+      "subagentCalls": 1,
+      "backgroundCalls": 1,
+      "sendMessageCalls": 2,
+      "settlementNotices": 3
+    },
+    {
+      "caseId": "continuable-report",
+      "scenarioStatus": "exercised",
+      "sessions": 2,
+      "subagentCalls": 1,
+      "backgroundCalls": 1,
+      "reportCalls": 1,
+      "reportRelays": 1,
+      "settlementNotices": 1
+    }
+  ],
+  "privacy": "Structure-only summary. Raw prompts, responses, session ids, trace paths, and credentials are not included. Hashes refer to local evidence that is intentionally not committed."
+}

@@ -1,0 +1,5 @@
+# The FIFO probe needs ordinary child replies. Removing the scoped report tool
+# prevents a continuable child from turning READY/FIRST/SECOND into unsolicited
+# coordinator relays that change the scenario being measured.
+- id: tool-subagent-report
+  disabled: true

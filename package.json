@@ -1,0 +1,70 @@
+{
+  "name": "dsh-subagent-contract",
+  "version": "0.1.0-preview.1",
+  "description": "Deterministic verifier for the exact bundled DeepSeek Harness subagent contract matrix over raw multi-session traces.",
+  "type": "module",
+  "bin": {
+    "dsh-subagent-contract": "./bin/dsh-subagent-contract.js"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./contracts": "./src/contracts.js",
+    "./session-log": "./src/session-log.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "benchmarks",
+    "schemas",
+    "docs",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check:syntax": "node --check bin/dsh-subagent-contract.js && node --check scripts/generate-evidence.mjs && node --check experiments/sdk-runner/lifecycle.mjs && node --check experiments/sdk-runner/runner-environment.mjs && node --check experiments/sdk-runner/runner-policy.mjs && node --check experiments/sdk-runner/run-matrix.mjs && node --check experiments/sdk-runner/smoke-initialize.mjs && node --check experiments/sdk-runner/test-lifecycle.mjs && node --check experiments/sdk-runner/test-runner-environment.mjs && node --check experiments/sdk-runner/test-runner-policy.mjs && node --check src/cli.js && node --check src/contracts.js && node --check src/diagnostics.js && node --check src/index.js && node --check src/run-artifact.js && node --check src/session-log.js",
+    "check": "npm run check:syntax && npm test",
+    "pack:check": "npm pack --dry-run",
+    "prepack": "npm run check"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-eval",
+    "subagent",
+    "multi-agent",
+    "contract-testing",
+    "trace-validation",
+    "session-trace",
+    "run-artifact",
+    "agent-evaluation",
+    "delegation",
+    "reproducibility",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArmyWas/dsh-subagent-contract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArmyWas/dsh-subagent-contract/issues"
+  },
+  "homepage": "https://github.com/ArmyWas/dsh-subagent-contract#readme",
+  "author": "ArmyWas",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "ajv": "8.20.0"
+  }
+}

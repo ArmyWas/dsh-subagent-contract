@@ -1,0 +1,43 @@
+name: dsh-subagent-contract-v0.1
+model: profile-default
+profile: headless
+command: [dsh]
+trials: 1
+timeoutMs: 600000
+seed: 0
+cases:
+  - id: foreground-success
+    prompt: >-
+      This is a deterministic DeepSeek Harness contract probe. Call the subagent tool exactly once.
+      Use description "contract:foreground-success", set run_in_background to false, and instruct the
+      child to reply with only CONTRACT-FOREGROUND-OK. After the tool returns, reply with only that same token.
+    expected:
+      tool: subagent
+  - id: two-admissions
+    prompt: >-
+      This is a deterministic DeepSeek Harness contract probe. In one model step, call the subagent tool
+      twice. Use descriptions "contract:admission-a" and "contract:admission-b", set run_in_background to
+      false for both, and ask each child to return only its description. Then reply OK.
+    expected:
+      tool: subagent
+  - id: continuable-fifo
+    prompt: >-
+      This is a deterministic lifecycle probe. Call subagent exactly once with description
+      "contract:continuable-fifo", run_in_background true, and a prompt that asks the child to reply READY.
+      Do not omit run_in_background. After the start result, do not use job tools, list_agents, shell tools, or
+      start another child. Let the turn end while the child runs. Only after the first subagent-settled notice,
+      call send_message once with message FIRST and the returned child id, then let the turn end and wait. Only
+      after the second settlement, send SECOND to that same id, then let the turn end and wait again. After the
+      third settlement, reply with only the child id. Never finish before the third settlement.
+    expected:
+      tool: send_message
+  - id: continuable-report
+    prompt: >-
+      This is a deterministic report-order probe. Call subagent exactly once with description
+      "contract:continuable-report", run_in_background true, and a prompt that tells the child to call report
+      exactly once with output CONTRACT-REPORT-OK and then reply DONE. Do not omit run_in_background. After the
+      start result, do not call send_message, job tools, list_agents, or shell tools, and do not query the child.
+      Let the turn end while the child runs. Wait for the runtime to deliver both the explicit subagent-report
+      relay and the subagent-settled notice. Only after both have arrived, reply with only OK.
+    expected:
+      tool: subagent

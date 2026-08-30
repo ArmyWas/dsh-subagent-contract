@@ -1,0 +1,6 @@
+{"type":"session","version":0,"id":"p-admission","createdAt":200,"cwd":"/fixture","delegationDepth":0}
+{"type":"tool/call","seq":1,"time":201,"data":{"turn":1,"step":1,"callId":"call-admission-a","name":"subagent","arguments":"{\"description\":\"contract:admission-a\",\"prompt\":\"Return contract:admission-a\",\"run_in_background\":false}"}}
+{"type":"tool/call","seq":2,"time":201,"data":{"turn":1,"step":1,"callId":"call-admission-b","name":"subagent","arguments":"{\"description\":\"contract:admission-b\",\"prompt\":\"Return contract:admission-b\",\"run_in_background\":false}"}}
+{"type":"tool/result","seq":3,"time":210,"data":{"turn":1,"step":1,"message":{"source":{"kind":"tool","callId":"call-admission-a"},"content":[{"type":"tool-result","toolCallId":"call-admission-a","content":[{"type":"text","text":"contract:admission-a"}],"isError":false}],"role":"user","id":"result-admission-a"}}}
+{"type":"tool/result","seq":4,"time":211,"data":{"turn":1,"step":1,"message":{"source":{"kind":"tool","callId":"call-admission-b"},"content":[{"type":"tool-result","toolCallId":"call-admission-b","content":[{"type":"text","text":"contract:admission-b"}],"isError":false}],"role":"user","id":"result-admission-b"}}}
+{"type":"turn/end","seq":5,"time":212,"data":{"reason":{"kind":"completed"}}}

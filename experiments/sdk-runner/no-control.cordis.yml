@@ -1,0 +1,3 @@
+# Scenarios without follow-up messages do not expose send_message or interrupt.
+- id: tool-subagent-control
+  disabled: true
