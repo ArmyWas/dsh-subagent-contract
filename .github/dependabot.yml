@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      npm-development:
+        dependency-type: development
+  # The SDK runner is a pinned evidence baseline. Upgrade it through a reviewed
+  # experiment rather than an automated version bump.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
