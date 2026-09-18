@@ -1,0 +1,4 @@
+{"type":"session","version":3,"id":"v3-source-ranges","createdAt":1,"cwd":"C:\\fixture","delegationDepth":0,"isSeeded":false}
+{"type":"user/message","seq":0,"time":1,"surfaceOp":"append","data":{"source":{"kind":"user"},"content":[{"type":"text","text":"one"}],"role":"user","id":"range-one"}}
+{"type":"user/message","seq":1,"time":2,"surfaceOp":"append","data":{"source":{"kind":"user"},"content":[{"type":"text","text":"two"}],"role":"user","id":"range-two"}}
+{"type":"user/message","seq":2,"time":3,"surfaceOp":{"op":"replace","startSeq":0,"endSeq":1},"sourceEventSeqs":[[0,1]],"data":{"source":{"kind":"user"},"content":[{"type":"text","text":"summary"}],"role":"user","id":"range-summary"}}

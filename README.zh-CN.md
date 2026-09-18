@@ -99,7 +99,10 @@ npx dsh-subagent-contract verify artifacts/subagent-run.json --format json
 - 支持 descriptor v2（实测 rc.7 与 npm rc.2），以及 2026-08-31 本地
   `0.1.2-alpha.1` 源码修订 `caec78de20` 和持久 `0.1.2-alpha.2` SDK 矩阵产生的
   descriptor v3。遇到未知版本返回退出码 `2`，不会靠猜测给出“通过”。
-- 尊重 `header.seedLength`，不会把 fork 继承的祖先 descriptor 当成当前子级的重复项。
+- 保留历史 header v0 路径（`header.seedLength`）；物理 header v3 交给固定版本的官方
+  catalog 严格恢复。v3 按 `isSeeded` 和最后一个继承 `session/end-seed` 标记划分自有事件，
+  展开并校验 `sourceEventSeqs` 范围，拒绝其他 header 版本。session header 与 descriptor
+  的版本是两个不同协议。详见[格式适配方案](docs/SESSION_FORMAT_COMPATIBILITY.md)。
 - 结构化诊断不包含提示词、模型回复、工具参数、原始 trial error 或子代理 description；
   CLI 层输入／读取错误仍可能带操作系统路径，分享前应检查。
 - 运行产物只按可信本地文件处理。加载器拒绝远程／设备路径，并限制 trace 数量、压缩输入
@@ -150,7 +153,10 @@ npm run check
 npm run pack:check
 ```
 
-项目没有运行时依赖。新增诊断必须同时添加脱敏、确定性的 fixture。
+v3 读取器固定运行时依赖 `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.2`、
+`@deepseek-ai/dsh-session@0.1.5-rc.2` 和 `@deepseek-ai/cordis@4.0.2`。仓库使用
+`npm ci` 复现已审查的依赖图，不要替换为 catalog 较旧的 npm `latest` 标签。
+新增诊断必须同时添加脱敏、确定性的 fixture。
 
 ## 许可证
 

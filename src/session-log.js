@@ -1,5 +1,6 @@
 import { readFile, stat } from 'node:fs/promises'
 import { constants, zstdDecompressSync } from 'node:zlib'
+import { restoreV3Session } from './session-v3.js'
 
 const ZSTD_MAGIC = 0xFD2FB528
 const MAX_SESSION_BYTES = 64 * 1024 * 1024
@@ -7,6 +8,13 @@ const MAX_DECOMPRESSED_BYTES = 128 * 1024 * 1024
 
 function isRecord(value) {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function isUnexpectedJsonEnd(error, line) {
+  if (!(error instanceof SyntaxError)) return false
+  if (error.message === 'Unexpected end of JSON input') return true
+  const position = /\bat position (\d+)(?:\s|$)/u.exec(error.message)
+  return position !== null && Number(position[1]) === line.length
 }
 
 /** Scan the concatenated Zstandard frame container written by DSH. */
@@ -90,16 +98,14 @@ function decodeSessionBufferDetailed(buffer) {
     parts.push(part)
   }
   if (tornStart !== undefined) {
-    try {
-      const part = zstdDecompressSync(buffer.subarray(tornStart), {
-        finishFlush: constants.ZSTD_e_flush,
-        maxOutputLength: MAX_DECOMPRESSED_BYTES - decompressedBytes,
-      })
-      decompressedBytes += part.length
-      parts.push(part)
-    } catch {
-      // A killed DSH process can leave a torn final frame. Complete frames are durable evidence.
-    }
+    // Flush recovers the available prefix of a torn frame. Actual decode errors,
+    // including the output limit, must never be mistaken for harmless truncation.
+    const part = zstdDecompressSync(buffer.subarray(tornStart), {
+      finishFlush: constants.ZSTD_e_flush,
+      maxOutputLength: MAX_DECOMPRESSED_BYTES - decompressedBytes,
+    })
+    decompressedBytes += part.length
+    parts.push(part)
   }
   return { text: Buffer.concat(parts).toString('utf8'), incomplete: tornStart !== undefined }
 }
@@ -111,6 +117,9 @@ export function decodeSessionBuffer(buffer) {
 
 /** Parse one complete or crash-truncated session log. */
 export function parseSessionLog(text, source = '<memory>') {
+  if (Buffer.byteLength(text, 'utf8') > MAX_DECOMPRESSED_BYTES) {
+    throw new Error(`${source}: session log exceeds the ${MAX_DECOMPRESSED_BYTES}-byte decoded safety limit`)
+  }
   const records = []
   const lines = text.split(/\r?\n/u)
   let incomplete = false
@@ -121,16 +130,20 @@ export function parseSessionLog(text, source = '<memory>') {
       records.push(JSON.parse(line))
     } catch (error) {
       const isLastNonEmpty = lines.slice(index + 1).every(candidate => candidate === '')
-      if (isLastNonEmpty) {
+      if (isLastNonEmpty && !text.endsWith('\n') && isUnexpectedJsonEnd(error, line)) {
         incomplete = true
         break
       }
-      throw new Error(`${source}: invalid JSON at line ${index + 1}`, { cause: error })
+      // JSON.parse errors can quote private input. Do not attach the original cause.
+      throw new Error(`${source}: invalid JSON at line ${index + 1}`)
     }
   }
   const [header, ...events] = records
   if (!isRecord(header) || header.type !== 'session' || typeof header.id !== 'string') {
     throw new Error(`${source}: missing valid session header`)
+  }
+  if (header.version === 3) {
+    return { path: source, header, ...restoreV3Session(header, events, source), incomplete }
   }
   if (header.version !== 0) throw new Error(`${source}: unsupported session header version ${String(header.version)}`)
   if (!Number.isSafeInteger(header.delegationDepth) || header.delegationDepth < 0) {
@@ -146,6 +159,7 @@ export function parseSessionLog(text, source = '<memory>') {
     path: source,
     header,
     events,
+    inheritedEventCount: seedLength,
     ownEvents: events.slice(seedLength),
     incomplete,
   }

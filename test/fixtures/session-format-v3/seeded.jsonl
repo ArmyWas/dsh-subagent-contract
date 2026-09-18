@@ -1,0 +1,4 @@
+{"type":"session","version":3,"id":"v3-seeded","createdAt":1,"cwd":"C:\\fixture","parentSession":"v3-parent","origin":"subagent","delegationDepth":1,"isSeeded":true}
+{"type":"session/end-seed","seq":0,"time":1,"data":{"inherited":true}}
+{"type":"user/message","seq":1,"time":2,"surfaceOp":"append","data":{"source":{"kind":"user"},"content":[{"type":"text","text":"inherited-message"}],"role":"user","id":"seed-message"}}
+{"type":"session/end-seed","seq":2,"time":3,"data":{"inherited":true}}

@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented here.
 
-## 0.1.0-preview.1 — Unreleased
+## Unreleased
+
+- Add strict physical session-header v3 restoration using the pinned official
+  catalog, with inherited-prefix and provenance handling, bounded expansion,
+  sanitized errors, and no fallback to the preserved historical v0 reader.
+  This is parser coverage, not a new paid four-case Harness compatibility run.
+
+## 0.1.0-preview.1 — 2026-08-30 (GitHub prerelease)
 
 - Add seven durable subagent contracts spanning lineage, descriptors,
   admission, foreground results, continuation, settlement, and report

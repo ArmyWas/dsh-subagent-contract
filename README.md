@@ -125,8 +125,12 @@ The exact invariants and diagnostic codes are documented in
   `caec78de20` and the persistent `0.1.2-alpha.2` SDK matrix tested on
   2026-08-31. Unknown descriptor versions return exit code `2` instead of
   guessing.
-- Honors `header.seedLength`, so an inherited fork prefix is not mistaken for
-  the child's own descriptor.
+- Keeps the historical header v0 reader (`header.seedLength`) and strictly
+  restores physical header v3 logs through the pinned official catalog. For v3,
+  `isSeeded` and the last inherited `session/end-seed` marker determine the own
+  suffix; packed `sourceEventSeqs` ranges are expanded and validated. Other
+  header versions are rejected. Session header versions and descriptor versions
+  are separate protocols. See [the format decision](docs/SESSION_FORMAT_COMPATIBILITY.md).
 - Structured diagnostics omit prompts, assistant messages, tool arguments, raw
   trial errors, and subagent descriptions. CLI-level input/read errors may
   still contain operating-system paths, so review output before sharing it.
@@ -192,8 +196,12 @@ npm run check
 npm run pack:check
 ```
 
-The package has no runtime dependencies. Contributions should add a redacted,
-deterministic fixture for every new diagnostic. See [CONTRIBUTING.md](CONTRIBUTING.md).
+The v3 reader pins `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.2`,
+`@deepseek-ai/dsh-session@0.1.5-rc.2`, and `@deepseek-ai/cordis@4.0.2` as runtime
+dependencies. Use `npm ci` for the reviewed repository dependency graph; do not
+substitute the catalog's older npm `latest` tag. Contributions should add a
+redacted, deterministic fixture for every new diagnostic. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
