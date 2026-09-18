@@ -16,6 +16,13 @@ Recovery failure is an error, never a reason to retry with the v0 parser.
 Header versions 1, 2 and unknown values are rejected. Descriptor v2/v3 handling
 is independent of session-header versions and is unchanged.
 
+The official session validator requires a header's optional `cwd` to
+be an absolute path according to the current reader host's path rules. Portable
+synthetic fixtures therefore substitute a native absolute path at test time.
+This verifies strict recovery on each test host; it does not establish that a
+persisted Windows log can be imported on Linux, or the reverse, without a
+separate supported relocation rule.
+
 `current` validation is intentional: the pinned catalog's `transformed` mode
 does not validate current-version event relationships. Probes found it could
 accept an unknown required event or a `turn/end` referencing the wrong turn.
@@ -83,7 +90,9 @@ fresh consumer installs and version tags before any authorized release.
 ## Evidence scope
 
 - Deterministic v3 fixtures cover unseeded, seeded and compressed provenance
-  shapes; old v0 fixtures and four-case verdict regressions are retained.
+  shapes using a test-host-native absolute `cwd`; old v0 fixtures and four-case
+  verdict regressions are retained. Cross-OS import of a log whose header
+  retains the other platform's path syntax is not claimed.
 - A recorded real headless session from a `dsh@0.1.5-rc.1` installation restores
   25 events with header v3, `isSeeded: false`, and inherited count zero. Its
   installed persistence/session packages resolve to `0.1.5-rc.2`.

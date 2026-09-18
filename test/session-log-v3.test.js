@@ -3,12 +3,13 @@ import { readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import test from 'node:test'
-import { loadSessionLog, parseSessionLog } from '../src/session-log.js'
+import { parseSessionLog } from '../src/session-log.js'
 
 const fixtureRoot = join(dirname(fileURLToPath(import.meta.url)), 'fixtures', 'session-format-v3')
 
 async function fixture(name) {
-  return readFile(join(fixtureRoot, name), 'utf8')
+  const text = await readFile(join(fixtureRoot, name), 'utf8')
+  return text.replace('"__FIXTURE_CWD__"', JSON.stringify(fixtureRoot))
 }
 
 function v3Header(fields = {}) {
@@ -17,7 +18,7 @@ function v3Header(fields = {}) {
     version: 3,
     id: 'v3-test',
     createdAt: 1,
-    cwd: 'C:\\fixture',
+    cwd: fixtureRoot,
     delegationDepth: 0,
     isSeeded: false,
     ...fields,
@@ -42,14 +43,14 @@ test('restores an unseeded physical v3 log and preserves its physical header', a
   assert.equal(session.header.type, 'session')
   assert.equal(session.header.version, 3)
   assert.equal(session.header.isSeeded, false)
-  assert.equal(session.header.cwd, 'C:\\fixture')
+  assert.equal(session.header.cwd, fixtureRoot)
   assert.equal(session.inheritedEventCount, 0)
   assert.equal(session.events[0].seq, 0)
   assert.deepEqual(session.ownEvents, session.events)
 })
 
 test('uses the last inherited end-seed marker as the v3 cut and keeps the marker in the own suffix', async () => {
-  const session = await loadSessionLog(join(fixtureRoot, 'seeded.jsonl'))
+  const session = parseSessionLog(await fixture('seeded.jsonl'))
   assert.equal(session.header.isSeeded, true)
   assert.equal(session.inheritedEventCount, 2)
   assert.deepEqual(session.events.map(event => event.seq), [0, 1, 2])
