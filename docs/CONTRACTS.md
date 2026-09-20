@@ -22,7 +22,12 @@ allowed because real runners persist them in `tracePaths`.
 
 Each trace is decoded independently. Graph relationships come from the session
 header, never from `tracePaths` order. The verifier analyzes
-`events.slice(header.seedLength ?? 0)` as the session's own suffix.
+`events.slice(inheritedEventCount)` as the session's own suffix. The historical
+v0 path derives this count from `header.seedLength ?? 0`. Strict v3 recovery
+derives it from `isSeeded` and the last `session/end-seed` with
+`data.inherited === true`; that boundary marker belongs to the own suffix.
+An ordinary restoration marker does not move the inherited boundary. See
+[session format compatibility](SESSION_FORMAT_COMPATIBILITY.md).
 
 ## Fixed scenario coverage
 
