@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check lifecycle.mjs && node --check runner-environment.mjs && node --check runner-policy.mjs && node --check run-matrix.mjs && node --check smoke-initialize.mjs && node --test test-lifecycle.mjs test-runner-environment.mjs test-runner-policy.mjs",
+    "check": "node --check lifecycle.mjs && node --check runner-environment.mjs && node --check runner-policy.mjs && node --check run-matrix.mjs && node --check smoke-initialize.mjs && node --check offline-network-guard.cjs && node --check test-sdk-security.mjs && node --require ./offline-network-guard.cjs --test test-lifecycle.mjs test-runner-environment.mjs test-runner-policy.mjs test-sdk-security.mjs",
     "smoke": "node smoke-initialize.mjs"
   },
   "dependencies": {
