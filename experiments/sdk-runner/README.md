@@ -11,6 +11,36 @@ is pinned to `@deepseek-ai/dsh-sdk-client@0.1.2-alpha.2` while the protocol is
 pre-release, and has been exercised on Windows only. Do not treat it as a
 general benchmark runner.
 
+## Offline maintenance checks
+
+```sh
+npm ci --ignore-scripts
+npm run check
+npm run smoke
+npm audit
+```
+
+These commands do not run `run-matrix.mjs` or send model prompts. The smoke
+check uses a placeholder credential and an isolated temporary home. Its child
+process preloads `offline-network-guard.cjs`, which rejects JavaScript fetch,
+Node HTTP/TCP connections, and listeners. The guard is test-only, not an
+operating-system sandbox, and is not applied to an explicitly authorized live
+matrix.
+
+The test suite also preloads the network guard. The security regressions use
+synthetic data and in-memory HTTP responses. They
+cover reviewed dependency floors, a bounded native SVG decode, cross-origin
+redirect rejection, same-origin redirect compatibility, and explicit bearer
+resource checking. A negative control documents that installing the patched
+MCP SDK alone does **not** enable its optional audience check.
+
+This runner talks to its Harness subprocess over stdio; it does not implement
+an HTTP MCP bearer-authentication server. If that changes, configure both
+`expectedResource` and the verifier's `AuthInfo.resource`, then test correct,
+missing, and wrong resource values. Do not use a green dependency scan as proof
+that an application's authorization configuration is correct. See the
+[review and evidence boundary](../../docs/SDK_SECURITY_REVIEW_2026-10-22.md).
+
 The runtime inherits a scrubbed process environment plus only the required
 DeepSeek key. It explicitly removes inherited custom endpoint routing, pins the
 public DeepSeek endpoint, and enforces a 4,096-token output cap in both live

@@ -21,6 +21,7 @@ const client = new HarnessClient({
     ...scrubbedParentEnv(),
     DEEPSEEK_API_KEY: 'sdk-smoke-placeholder-not-a-real-credential',
     DSH_TELEMETRY_DISABLED: '1',
+    NODE_OPTIONS: `--require ${JSON.stringify(join(root, 'offline-network-guard.cjs'))}`,
   },
   initializeTimeoutMs: 30_000,
   requestTimeoutMs: 5_000,
