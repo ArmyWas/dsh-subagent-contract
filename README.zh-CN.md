@@ -153,10 +153,16 @@ npm run check
 npm run pack:check
 ```
 
-v3 读取器固定运行时依赖 `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.2`、
-`@deepseek-ai/dsh-session@0.1.5-rc.2` 和 `@deepseek-ai/cordis@4.0.2`。仓库使用
+v3 读取器固定运行时依赖 `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.3`、
+`@deepseek-ai/dsh-session@0.1.5-rc.3` 和 `@deepseek-ai/cordis@4.0.2`。仓库使用
 `npm ci` 复现已审查的依赖图，不要替换为 catalog 较旧的 npm `latest` 标签。
 新增诊断必须同时添加脱敏、确定性的 fixture。
+
+这三个运行时包作为同一个证据基线一起审查和升级，因此 Dependabot 会抑制它们各自的
+常规版本更新 PR；Dependabot 安全更新和漏洞告警仍保持启用。安全修复仍可能需要手动
+协调升级整个依赖组合并运行相应测试。
+详见[依赖策略与安全维护记录](docs/DEPENDENCY_MAINTENANCE_2026-10-29.md)；离线检查不代表
+重新完成了付费模型矩阵验证。
 
 ## 许可证
 

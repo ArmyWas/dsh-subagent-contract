@@ -8,6 +8,25 @@ updates:
     groups:
       npm-development:
         dependency-type: development
+    # These packages form one evidence-reviewed runtime bundle. Routine version
+    # updates are reviewed together; update-types does not suppress Dependabot
+    # security updates or vulnerability alerts.
+    ignore:
+      - dependency-name: "@deepseek-ai/cordis"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+          - "version-update:semver-major"
+      - dependency-name: "@deepseek-ai/dsh-session"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+          - "version-update:semver-major"
+      - dependency-name: "@deepseek-ai/dsh-session-format-catalog"
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"
+          - "version-update:semver-major"
   # The SDK runner is a pinned evidence baseline. Upgrade it through a reviewed
   # experiment rather than an automated version bump.
   - package-ecosystem: github-actions

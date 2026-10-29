@@ -11,11 +11,17 @@ import sharp from 'sharp'
 // They are not a substitute for a fresh advisory scan or a reachability review.
 const floors = {
   '@modelcontextprotocol/sdk': '1.32.0',
+  '@hono/node-server': '2.1.3',
+  'body-parser': '2.4.0',
+  'fast-uri': '3.1.9',
   'proxy-addr': '2.0.8',
+  qs: '6.16.1',
   compression: '1.8.2',
   hono: '4.13.11',
   'ip-address': '10.7.4',
   sharp: '0.35.5',
+  undici: '8.12.2',
+  zod: '4.6.6',
 }
 
 function stableParts(version) {

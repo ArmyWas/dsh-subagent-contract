@@ -196,12 +196,18 @@ npm run check
 npm run pack:check
 ```
 
-The v3 reader pins `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.2`,
-`@deepseek-ai/dsh-session@0.1.5-rc.2`, and `@deepseek-ai/cordis@4.0.2` as runtime
+The v3 reader pins `@deepseek-ai/dsh-session-format-catalog@0.1.5-rc.3`,
+`@deepseek-ai/dsh-session@0.1.5-rc.3`, and `@deepseek-ai/cordis@4.0.2` as runtime
 dependencies. Use `npm ci` for the reviewed repository dependency graph; do not
 substitute the catalog's older npm `latest` tag. Contributions should add a
 redacted, deterministic fixture for every new diagnostic. See
 [CONTRIBUTING.md](CONTRIBUTING.md).
+
+These three runtime packages are reviewed and upgraded as one evidence baseline,
+so Dependabot suppresses their independent routine version-update pull requests.
+Dependabot security updates and vulnerability alerts remain enabled. A security
+fix may still require a coordinated manual upgrade of the bundle and its tests.
+See the [dependency-policy and security maintenance evidence](docs/DEPENDENCY_MAINTENANCE_2026-10-29.md).
 
 ## License
 
