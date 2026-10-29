@@ -41,6 +41,10 @@ missing, and wrong resource values. Do not use a green dependency scan as proof
 that an application's authorization configuration is correct. See the
 [review and evidence boundary](../../docs/SDK_SECURITY_REVIEW_2026-10-22.md).
 
+The [2026-10-29 maintenance review](../../docs/DEPENDENCY_MAINTENANCE_2026-10-29.md)
+records newer in-range lockfile security updates and installed floors. Its
+offline checks do not renew the historical paid four-case matrix evidence.
+
 The runtime inherits a scrubbed process environment plus only the required
 DeepSeek key. It explicitly removes inherited custom endpoint routing, pins the
 public DeepSeek endpoint, and enforces a 4,096-token output cap in both live
